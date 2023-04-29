@@ -5,7 +5,7 @@ import data from './data.json'
 
 export default function Footer() {
     return (
-        <div className='bg-slate-950'>
+        <div className='bg-slate-950 top-full'>
             <footer className='max-w-5xl mx-auto grid grid-cols-3 bg-slate-950 text-slate-50 py-12 italic'>
 
             {
