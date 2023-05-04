@@ -1,19 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { filterActions } from "../../redux/Filter/FilterSlice";
 import { RootState } from "../../app/store";
 import { CartRecord } from "../Cart/CartRecord";
+import { Item } from "../../model/cart";
+import { cartActions } from "../../redux/Cart/CartSlice";
 
 export function TableCart() {
 
     const dispatch = useAppDispatch()
 
-    const demo = useAppSelector((state:RootState) => state.filter)
+    const cart = useAppSelector((state:RootState) => state.cart)
+
+    const [items, setItems] = useState<Item[]>([] as Item[])
 
     useEffect(()=>{
-        dispatch(filterActions.getKeyFilter(''))
+
+        let listCart = localStorage.getItem('listCart')
+        if (listCart !== null) {
+
+            setItems(JSON.parse(listCart))
+            if (cart.length === 0) {
+
+                dispatch(cartActions.getItemsCart())
+            }
+        } 
+        
     }, [])
     
+    useEffect(()=>{
+        // console.log("Table Cart");
+        setItems(cart)
+    },[cart])
     return (
         <div className="italic">
             {/* Heading row */}
@@ -27,7 +45,7 @@ export function TableCart() {
             </div>
             {/*  Data table */}
             {
-                demo.map((value, index) => (
+                items.map((value, index) => (
                     <CartRecord {...value} key={index}/>
                 ))
             }

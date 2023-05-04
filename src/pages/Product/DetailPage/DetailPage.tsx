@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { RootState } from '../../../app/store';
 import { useEffect, useState } from 'react';
@@ -9,6 +9,8 @@ import { Product } from '../../../model/product';
 import { formatPrice } from '../../../components/Card/script';
 import Card from '../../../components/Card/Card';
 import { filterActions } from '../../../redux/Filter/FilterSlice';
+import { Item } from '../../../model/cart';
+import { cartActions } from '../../../redux/Cart/CartSlice';
 
 type Id  = {
     '$oid': string
@@ -20,15 +22,54 @@ export default function DetailPage() {
 
     const dispatch = useAppDispatch()
 
+    const navigator = useNavigate()
+
     const [product, setProduct] = useState<Product>({} as Product)
 
     const [price, setPrice] = useState<string>('')
 
     const [quantity, setQuantity] = useState<number>(1)
 
+    const [item, setItem] = useState<Item>({
+        id: '',
+        name: '',
+        img: '',
+        price: '',
+        quantity: 1,
+        total: '',
+    })
+
     const [longDes, setLongDes] = useState<string[]>([] as string[])
 
     const listProduct = useAppSelector((state:RootState)=>state.filter)
+    
+    const getArraySpecify = function(text:string) {
+
+        const resultArray = text.split('•')
+        
+        return resultArray
+    }
+
+    
+
+    const handleClickAddToCart = function() {
+
+        // convert id
+        let strId: string  = JSON.stringify(product._id)
+        let id: Id = JSON.parse(strId) 
+
+        let item:Item = {
+            id: id.$oid,
+            name: product.name,
+            price: product.price,
+            img: product.img1,
+            quantity: quantity,
+            total: JSON.stringify((Number(product.price) * quantity))
+        }
+        // console.log("Cart: ", item);
+        dispatch(cartActions.addItemIntoCart(item))
+        navigator('/shop')
+    }
 
     useEffect(()=>{
 
@@ -50,16 +91,11 @@ export default function DetailPage() {
     }, [])
 
     useEffect(()=>{
+
         
     },[quantity])
 
     
-    const getArraySpecify = function(text:string) {
-
-        const resultArray = text.split('•')
-        
-        return resultArray
-    }
 
     return (
 
@@ -126,7 +162,7 @@ export default function DetailPage() {
                             </div>
                         </div>
                         {/* Button Add to cart */}
-                        <div className='bg-[#353535] flex items-center w-[150px] h-10 justify-center text-[#E4E4E4] hover:cursor-pointer hover:bg-[#161515ad]' >
+                        <div className='bg-[#353535] flex items-center w-[150px] h-10 justify-center text-[#E4E4E4] hover:cursor-pointer hover:bg-[#161515ad]' onClick={handleClickAddToCart}>
                             <span>Add to cart</span>
                         </div>
                     </div>
