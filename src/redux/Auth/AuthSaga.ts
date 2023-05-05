@@ -6,6 +6,9 @@ import { AuthDto, LoginDto } from "../../model/auth";
 
 function handleLogout() {
 
+    localStorage.removeItem("currentUser")
+    localStorage.removeItem('isAuth')
+
 }
 
 function* handleMakeAuth(action:PayloadAction<LoginDto>) {
@@ -28,9 +31,10 @@ function* handleMakeAuth(action:PayloadAction<LoginDto>) {
             if (userArr[i].email === action.payload.email) {
 
                 isAuth = true
+                currentUser.email = userArr[i].email
+
                 if (userArr[i].password === action.payload.password) {
 
-                    currentUser.email = userArr[i].email
                     currentUser.phone = userArr[i].phone
                     currentUser.name = userArr[i].name
                     break
@@ -39,7 +43,7 @@ function* handleMakeAuth(action:PayloadAction<LoginDto>) {
         }
     }
     // else: account not exited before
-    if (isAuth && currentUser.email !== null) {
+    if (isAuth && currentUser.email !== '') {
 
         localStorage.setItem('isAuth', JSON.stringify(isAuth))
         yield put(authActions.authAccountSuccess(currentUser))

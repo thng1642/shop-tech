@@ -1,12 +1,15 @@
 import { TextField } from "@mui/material";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginDto } from "../../model/auth";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { authActions } from "../../redux/Auth/AuthSlice";
+import { RootState } from "../../app/store";
 
 
 export function Login() {
+
+    const isAuth = useRef(false)
 
     const [isEmail, setIsEmail] = useState<boolean>(false)
     const [isPassword, setIsPassword] = useState<boolean>(false)
@@ -15,6 +18,9 @@ export function Login() {
     const [helperPassword, setHelperPassword] = useState<string>('')
 
     const dispatch = useAppDispatch()
+    const nav = useNavigate()
+
+    const auth = useAppSelector((state:RootState)=>state.auth)
 
     const [account, setAccount] = useState<LoginDto>(
         {
@@ -22,6 +28,25 @@ export function Login() {
             password: '',
         }
     )
+
+    useEffect(()=>{
+
+        // login success
+        if (auth.email !== '' && auth.name !== '') {
+            nav('/')
+        }   
+        // fail password or email
+        if (auth.email === 'false') {
+            
+            setIsEmail(true)
+            setHelperEmail('Wrong email or password')
+            setIsPassword(true)
+            setHelperPassword('Wrong email or password')
+            setAccount({...account, 'password': ''})
+        }
+    
+        
+    },[auth])
 
     const isEmptyFields = function() {
 
@@ -73,6 +98,8 @@ export function Login() {
                     onChange={(event)=>{
                         const {value, name} = event.target
                             
+                        setHelperPassword('')
+                        setIsPassword(false)
                         setHelperEmail('')
                         setIsEmail(false)
                         setAccount({...account, [name]: value})
@@ -90,6 +117,8 @@ export function Login() {
                         onChange={(event)=>{
                             const {value, name} = event.target
                                 
+                            setHelperEmail('')
+                            setIsEmail(false)
                             setHelperPassword('')
                             setIsPassword(false)
                             setAccount({...account, [name]: value})
@@ -100,6 +129,8 @@ export function Login() {
                 <div 
                     className="bg-[#474444] mb-10 text-gray-100 hover:cursor-pointer hover:bg-slate-500 h-14 flex justify-center items-center"
                     onClick={()=>{
+
+                        isAuth.current = true
 
                         // console.log(account)
                         if (isEmptyFields()) {

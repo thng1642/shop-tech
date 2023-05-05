@@ -28,9 +28,14 @@ const authSlice = createSlice({
             localStorage.setItem('currentUser', JSON.stringify(tmp))
             return tmp
         },
-        authAccountFail() {
+        authAccountFail(state) {
+
+            let tmp = {...state}
+
+            tmp.email = 'false'
 
             localStorage.setItem('isAuth', 'false')
+            return tmp
         }
     }
 })

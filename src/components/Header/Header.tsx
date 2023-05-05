@@ -1,9 +1,40 @@
 
 // @flow
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { RootState } from '../../app/store';
+import { AuthDto } from '../../model/auth';
+import { authActions } from '../../redux/Auth/AuthSlice';
 
 export function Header() {
+
+    const auth = useAppSelector((state:RootState)=>state.auth)
+
+    const dispatch = useAppDispatch()
+
+    const nav = useNavigate()
+    
+    const [currentUser, setCurrentUser] = React.useState<AuthDto>({
+        name: '',
+        email: '',
+        phone: ''
+    })
+
+    React.useEffect(()=>{
+        
+        const textCurrent = localStorage.getItem("currentUser")
+        
+        
+        if (textCurrent !== null) {
+
+            setCurrentUser(JSON.parse(textCurrent))
+        }
+
+        console.log("current", currentUser);
+
+    },[currentUser.email])
+
     return (
         <header className='max-w-5xl mx-auto h-[40px] italic flex justify-between items-center mb-4'>
 
@@ -26,14 +57,37 @@ export function Header() {
                     <span>Cart</span>
                 </Link>
                 {/* Personal account */}
-                <Link to='dangnhap' className='flex'>
+                <div className='flex'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-gray-500">
                         <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
                     </svg>
                     {/* Checking login ? */}
-                    <span>Login</span>
+                    {
+                        (currentUser.email === '') ? <Link to='dangnhap'>Login</Link> :
+                        <div className='flex flex-row items-center'>
+                            {/* {getNameMail(currentUser.email)} */}
+                            {currentUser.name}
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"     className="w-5 h-5">
+                                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                            </svg>
 
-                </Link>
+                            <div className='hover:cursor-pointer' onClick={()=>{
+                                console.log("log out");
+                                setCurrentUser({
+                                    name: '',
+                                    email: '',
+                                    phone: ''
+                                })
+                                dispatch(authActions.logoutAccount())
+                                
+                            }}>
+                                <p>( Logout )</p>
+                            </div>
+                        </div>
+                    }
+                    
+
+                </div>
 
             </div>
         </header>
