@@ -1,10 +1,34 @@
-
-
 import { TextField } from "@mui/material";
-import { TableCart } from "../../components/TableCart/TableCart";
 import { Link } from "react-router-dom";
 
+import { TableCart } from "../../components/TableCart/TableCart";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { formatPrice } from "../../components/Card/script";
+
 export function Cart() {
+
+    const cart = useSelector((state:RootState) => state.cart)
+
+    const [ total, setTotal ] = useState<string>('0')
+
+    useEffect(()=>{
+
+        if (cart.length !== 0) {
+            
+            let totalPrice = 0
+            // console.log("Cart reload with cart: ", cart);
+            cart.forEach(( value ) => {
+                totalPrice += parseInt(value.total)
+            })
+
+            setTotal(totalPrice.toString())
+            console.log("Total price: ", totalPrice);
+        }
+        
+    }, [cart])
+
     return (
         <main className="max-w-5xl mx-auto min-h-[80vh]">
             {/* Heading */}
@@ -22,6 +46,7 @@ export function Cart() {
             <h3 className="uppercase font-normal italic mb-6 tracking-wide text-2xl">shopping cart</h3>
 
             <section className="w-full grid grid-cols-[1fr_300px] gap-x-6">
+
                 <TableCart />
                 {/* Bill */}
                 <div className="bg-[#ECEEEC] h-[fit-content] w-full px-8 py-10">
@@ -30,12 +55,12 @@ export function Cart() {
 
                     <div className="flex flex-row justify-between border-b pb-3 mb-3 border-gray-500">
                         <h4 className="text-sm uppercase italic">subtotal</h4>
-                        <span className="text-sm text-gray-500">12.200.200 VND</span>
+                        <span className="text-sm text-gray-500">{formatPrice(total)} VND</span>
                     </div>
 
                     <div className="flex flex-row justify-between mb-6">
                         <h4 className="uppercase italic">total</h4>
-                        <span className="italic text-gray-600">12.200.200 VND</span>
+                        <span className="italic text-gray-600">{formatPrice(total)} VND</span>
                     </div>
 
                     <TextField 

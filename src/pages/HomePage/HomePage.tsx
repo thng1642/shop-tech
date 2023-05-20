@@ -9,10 +9,16 @@ import { BannerHeader } from '../../components/BannerHeader/BannerHeader'
 import DialogProduct from '../../components/PopUp/product/DialogProduct';
 import { useAppDispatch } from '../../app/hooks';
 import { popupActions } from '../../redux/PopUp/PopupSlice';
+import { useNavigate } from 'react-router-dom';
+import Chat from '../../components/ChatApp';
 
 export default function HomePage() {
 
     const [trending, setTrending] = useState<Product[]>([] as Product[])
+
+    const [isOpenChat, setIsOpenChat] = useState<boolean>(false)
+
+    const nav = useNavigate()
 
     const dispatch = useAppDispatch()
 
@@ -35,6 +41,10 @@ export default function HomePage() {
         getTrendingProduct()
     }, [])
 
+    const handleClickCategories = () => {
+        nav('shop')
+    }
+
     return (
         <main className='max-w-5xl mx-auto'>
             
@@ -51,13 +61,13 @@ export default function HomePage() {
                 <div className='w-full'>
 
                     <div className='grid grid-cols-[repeat(2,_1fr)] gap-6 mb-6'>
-                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_1.png?alt=media&token=09afc365-0ad1-444f-8e10-d5c8b0385d2a" alt="iPhone" />
-                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_2.png?alt=media&token=77850e57-cc22-4872-80cd-38f7e96201cb" alt="iMac" />
+                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_1.png?alt=media&token=09afc365-0ad1-444f-8e10-d5c8b0385d2a" onClick={handleClickCategories} alt="iPhone" />
+                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_2.png?alt=media&token=77850e57-cc22-4872-80cd-38f7e96201cb" onClick={handleClickCategories} alt="iMac" />
                     </div>
                     <div className='grid grid-cols-3 gap-3'>
-                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_3.png?alt=media&token=ac415de3-be39-4bd5-b43f-acc523f3a33a" alt="iPad" />
-                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_4.png?alt=media&token=1aa445ea-5950-4357-913d-c25750012042" alt="watch" />
-                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_5.png?alt=media&token=c4794d90-2525-499c-953a-a354b9b2986a" alt="AirPods" />
+                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_3.png?alt=media&token=ac415de3-be39-4bd5-b43f-acc523f3a33a" onClick={handleClickCategories} alt="iPad" />
+                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_4.png?alt=media&token=1aa445ea-5950-4357-913d-c25750012042" onClick={handleClickCategories} alt="watch" />
+                        <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_5.png?alt=media&token=c4794d90-2525-499c-953a-a354b9b2986a" onClick={handleClickCategories} alt="AirPods" />
                     </div>
                     
                 </div>
@@ -118,6 +128,14 @@ export default function HomePage() {
 
                 <SubscribeBar />
             </section>
+
+            {/* <Chat /> */}
+            <div className='min-w-[64px] fixed bottom-10 right-4 '>
+                {
+                    (isOpenChat) ? <Chat /> : null
+                }
+                <img src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/messenger.png?alt=media&token=143c80a9-769a-4803-b3be-9981242b8023" alt="Message" className='hover:cursor-pointer relative ml-[calc(100%_-_64px)]' onClick={()=>{setIsOpenChat(!isOpenChat)}}/>
+            </div>
         </main>
     )
 };

@@ -1,6 +1,33 @@
 import { TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+
+import { formatPrice } from "../../components/Card/script";
+import { Item } from "../../model/cart";
 
 export function Checkout() {
+
+    const [items, setItems] = useState<Item[]>([] as Item[])
+
+    const [ total, setTotal ] = useState<string>('0')
+
+    useEffect(() => {
+        
+        let listCart = localStorage.getItem('listCart')
+
+        if (listCart !== null) {
+
+            let cart = JSON.parse(listCart)
+            let totalPrice = 0
+            // console.log("Cart reload with cart: ", cart);
+            cart.forEach(( value: { total: string; } ) => {
+                totalPrice += parseInt(value.total)
+            })
+            setTotal(totalPrice.toString())
+            setItems(cart)
+            
+        } 
+    }, [])
+
     return (
         <main className="max-w-5xl mx-auto min-h-[80vh]">
             {/* Heading */}
@@ -61,19 +88,26 @@ export function Checkout() {
                 <div className="bg-[#ECEEEC] h-[fit-content] w-full px-8 py-10">
                     <p className="italic uppercase tracking-wider font-medium text-lg mb-6">your order</p>
 
-                    <div className="italic flex flex-row flex-nowrap items-center justify-between border-b pb-2 border-gray-400 border-solid mb-4">
-                        <p className="font-medium inline-block">Apple iPhone 11 64GB</p>
-                        <span className="text-gray-500 text-sm">10.999.000 VND x1</span>
-                    </div>
+                    {
+                        items.map((value, index) => (
 
-                    <div className="italic flex flex-row flex-nowrap items-center justify-between border-b pb-2 border-gray-400 border-solid mb-4">
+                        <div key={index} className="italic grid grid-cols-2 items-center justify-between border-b pb-2 border-gray-400 border-solid mb-4">
+                            <p className="font-medium inline-block">{value.name}</p>
+                            <span className="text-gray-500 text-sm">{formatPrice(value.price)} VND x{value.quantity}</span>
+                        </div>
+                        ))
+                    }
+
+                    {/* <div className="italic flex flex-row flex-nowrap items-center justify-between border-b pb-2 border-gray-400 border-solid mb-4">
                         <p className="font-medium inline-block">Apple iPhone 11 64GB</p>
                         <span className="text-gray-500 text-sm">10.999.000 VND x1</span>
-                    </div>
+                    </div> */}
+
+                    
                     {/* Total */}
                     <div className="flex flex-row justify-between">
                         <p className="italic uppercase tracking-wider font-medium ">total</p>
-                        <span className="text-lg">10.990.900 VND</span>
+                        <span className="text-lg">{formatPrice(total)} VND</span>
                     </div>
                 </div>
             </div>

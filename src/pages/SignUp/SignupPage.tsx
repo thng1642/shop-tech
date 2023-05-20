@@ -201,7 +201,7 @@ export function SignupPage() {
                 
                 <div className="italic text-gray-500 inline-block text-center">
                     <span>Login?</span>
-                    <Link to={'/'}  className="text-blue-500">Click</Link>
+                    <Link to={'/dangnhap'}  className="text-blue-500">Click</Link>
                 </div>
             </div>
         </div>

@@ -1,18 +1,14 @@
+import { OutlinedInput } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { OutlinedInput } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 
-import filter from './filter.json';
-import { trendingApi } from '../../features/product/TredingApi';
-import { Product } from '../../model/product';
-import Card from '../../components/Card/Card';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { filterActions } from '../../redux/Filter/FilterSlice';
-import { RootState } from '../../app/store';
+import { useAppDispatch } from '../../app/hooks';
 import FilterResult from '../../components/Filter/FilterResult';
+import { filterActions } from '../../redux/Filter/FilterSlice';
+import filter from './filter.json';
 
 export default function ShopPage() {
 
@@ -79,7 +75,7 @@ export default function ShopPage() {
                 {/* Product collection */}
                 <div className='mb-12'>
                     {/* Top heading */}
-                    <div className='bg-orange-400 w-full flex flex-row justify-between items-center mb-3'>
+                    <div className='w-full flex flex-row justify-between items-center mb-3'>
                         {/* Search input */}
                         <div className="w-[250px] h-10 flex items-center border border-slate-500">
                             <input type="text" className="w-full h-full pl-3 focus:outline-none" placeholder="Enter search here!" name="subscribe" id="sub-bar" />

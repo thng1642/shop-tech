@@ -1,16 +1,17 @@
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { RootState } from '../../../app/store';
-import { useEffect, useState } from 'react';
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
-import { Product } from '../../../model/product';
-import { formatPrice } from '../../../components/Card/script';
 import Card from '../../../components/Card/Card';
-import { filterActions } from '../../../redux/Filter/FilterSlice';
+import { formatPrice } from '../../../components/Card/script';
+import { getProductById } from '../../../features/product/TredingApi';
 import { Item } from '../../../model/cart';
+import { Product } from '../../../model/product';
 import { cartActions } from '../../../redux/Cart/CartSlice';
+import { filterActions } from '../../../redux/Filter/FilterSlice';
 
 type Id  = {
     '$oid': string
@@ -30,14 +31,14 @@ export default function DetailPage() {
 
     const [quantity, setQuantity] = useState<number>(1)
 
-    const [item, setItem] = useState<Item>({
-        id: '',
-        name: '',
-        img: '',
-        price: '',
-        quantity: 1,
-        total: '',
-    })
+    // const [item, setItem] = useState<Item>({
+    //     id: '',
+    //     name: '',
+    //     img: '',
+    //     price: '',
+    //     quantity: 1,
+    //     total: '',
+    // })
 
     const [longDes, setLongDes] = useState<string[]>([] as string[])
 
@@ -49,8 +50,6 @@ export default function DetailPage() {
         
         return resultArray
     }
-
-    
 
     const handleClickAddToCart = function() {
 
@@ -71,30 +70,47 @@ export default function DetailPage() {
         navigator('/shop')
     }
 
-    useEffect(()=>{
-
-        for(let i = 0; i < listProduct.length; i++) {
-            let tmp = listProduct[i]
-            // get id
-            let strId: string  = JSON.stringify(tmp._id)
-            let id: Id = JSON.parse(strId) 
-            if (id.$oid === productId) {
-                // get relative product - same product category
-                dispatch(filterActions.getKeyFilter(tmp.category))
-
-                setPrice(formatPrice(tmp.price))
-                setProduct({...tmp})
-                setLongDes(getArraySpecify(tmp.long_desc))
-                break
-            }
-        }
-    }, [])
-
-    useEffect(()=>{
-
+    const handleRefPage = async () => {
         
-    },[quantity])
+        const [result, error] = await getProductById(productId as string)
 
+        if (result) {
+
+            setProduct({...result.at(0)})
+
+            dispatch(filterActions.getKeyFilter(result.at(0).category))
+
+            setPrice(formatPrice(result.at(0).price))
+            setProduct({...result.at(0)})
+            setLongDes(getArraySpecify(result.at(0).long_desc))
+
+            // console.log("Result: ", result.at(0))
+        }
+
+    }
+
+    useEffect(()=>{
+        
+            handleRefPage()
+        
+        // for(let i = 0; i < listProduct.length; i++) {
+        //     let tmp = listProduct[i]
+        //     // get id
+        //     let strId: string  = JSON.stringify(tmp._id)
+        //     let id: Id = JSON.parse(strId) 
+            
+            
+        //     if (id.$oid === productId) {
+        //         // get relative product - same product category
+        //         dispatch(filterActions.getKeyFilter(tmp.category))
+
+        //         setPrice(formatPrice(tmp.price))
+        //         setProduct({...tmp})
+        //         setLongDes(getArraySpecify(tmp.long_desc))
+        //         break
+        //     }
+        // }
+    }, [])
     
 
     return (
