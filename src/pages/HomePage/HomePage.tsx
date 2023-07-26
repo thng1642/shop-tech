@@ -11,6 +11,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { popupActions } from '../../redux/PopUp/PopupSlice';
 import { useNavigate } from 'react-router-dom';
 import Chat from '../../components/ChatApp';
+import axios from 'axios';
 
 export default function HomePage() {
 
@@ -23,22 +24,33 @@ export default function HomePage() {
     const dispatch = useAppDispatch()
 
     useEffect(()=>{
-        
         // call api
-        const getTrendingProduct = async () => {
+        // const getTrendingProduct = async () => {
 
-            const[result, error]:any[] = await trendingApi();
+        //     const[result, error]:any[] = await trendingApi();
 
-            if (result) {
-                const dump: Product[] = []
-                for (let i = 0; i < 8; i++) {
+        //     if (result) {
+        //         const dump: Product[] = []
+        //         for (let i = 0; i < 8; i++) {
 
-                    dump.push(result[i])
-                }
-                setTrending([...dump])
-            }            
-        }
-        getTrendingProduct()
+        //             dump.push(result[i])
+        //         }
+        //         setTrending([...dump])
+        //     }            
+        // }
+        // getTrendingProduct()
+        // Gets trending products
+        ;(async () => {
+            try {
+                const res = await axios.get('http://localhost:5000/api/v1/trending')
+                const trendingProds = res.data
+                setTrending(res.data)
+                console.log(trendingProds)
+            } catch(error) {
+
+            }
+
+        })()
     }, [])
 
     const handleClickCategories = () => {
@@ -55,7 +67,7 @@ export default function HomePage() {
                 {/* Heading */}
                 <div className='italic uppercase flex flex-col mb-6 items-center'>
                     <p className='text-xs tracking-wide text-gray-500'>carefully created collection</p>
-                    <h3 className='tracking-wider font-medium' >browse our category</h3>
+                    <h3 className='tracking-wider font-medium'>browse our category</h3>
                 </div>
                 {/* Images */}
                 <div className='w-full'>
@@ -87,10 +99,7 @@ export default function HomePage() {
                 {
                 trending.map((item, index)=>(
                     <Card key={index} handleClick={()=>{
-
-                        dispatch(popupActions.showUp(JSON.stringify(item._id)))
-                        console.log('co ne');
-                        
+                        dispatch(popupActions.showUp(item._id))
                     }} _id={item._id} name={item.name}
                     avt={item.img1} price={item.price} />
                 ))

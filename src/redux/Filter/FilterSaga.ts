@@ -6,6 +6,8 @@ import { Product } from "../../model/product";
 
 function* handleFilter(action: PayloadAction<string | null>) {
 
+    let categoryId = ''
+    
     if(action.payload === '' || action.payload === 'all') {
 
         const[result, error]:any[] = yield call(trendingApi)

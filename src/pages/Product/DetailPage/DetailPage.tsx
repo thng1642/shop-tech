@@ -2,63 +2,36 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { RootState } from '../../../app/store';
+import axios from 'axios';
 
+import { useAppDispatch } from '../../../app/hooks';
 import Card from '../../../components/Card/Card';
 import { formatPrice } from '../../../components/Card/script';
-import { getProductById } from '../../../features/product/TredingApi';
 import { Item } from '../../../model/cart';
 import { Product } from '../../../model/product';
 import { cartActions } from '../../../redux/Cart/CartSlice';
-import { filterActions } from '../../../redux/Filter/FilterSlice';
 
-type Id  = {
-    '$oid': string
-}
 
 export default function DetailPage() {
 
     const {productId} = useParams()
-
     const dispatch = useAppDispatch()
-
     const navigator = useNavigate()
-
     const [product, setProduct] = useState<Product>({} as Product)
-
-    const [price, setPrice] = useState<string>('')
-
     const [quantity, setQuantity] = useState<number>(1)
-
-    // const [item, setItem] = useState<Item>({
-    //     id: '',
-    //     name: '',
-    //     img: '',
-    //     price: '',
-    //     quantity: 1,
-    //     total: '',
-    // })
-
     const [longDes, setLongDes] = useState<string[]>([] as string[])
+    //  relative products
+    const [listProduct, setListProduct] = useState([])
 
-    const listProduct = useAppSelector((state:RootState)=>state.filter)
-    
     const getArraySpecify = function(text:string) {
-
-        const resultArray = text.split('•')
-        
+        const resultArray = text.split('•') 
         return resultArray
     }
 
     const handleClickAddToCart = function() {
 
-        // convert id
-        let strId: string  = JSON.stringify(product._id)
-        let id: Id = JSON.parse(strId) 
-
         let item:Item = {
-            id: id.$oid,
+            id: product._id,
             name: product.name,
             price: product.price,
             img: product.img1,
@@ -70,55 +43,39 @@ export default function DetailPage() {
         navigator('/shop')
     }
 
-    const handleRefPage = async () => {
-        
-        const [result, error] = await getProductById(productId as string)
-
-        if (result) {
-
-            setProduct({...result.at(0)})
-
-            dispatch(filterActions.getKeyFilter(result.at(0).category))
-
-            setPrice(formatPrice(result.at(0).price))
-            setProduct({...result.at(0)})
-            setLongDes(getArraySpecify(result.at(0).long_desc))
-
-            // console.log("Result: ", result.at(0))
-        }
-
-    }
-
     useEffect(()=>{
-        
-            handleRefPage()
-        
-        // for(let i = 0; i < listProduct.length; i++) {
-        //     let tmp = listProduct[i]
-        //     // get id
-        //     let strId: string  = JSON.stringify(tmp._id)
-        //     let id: Id = JSON.parse(strId) 
-            
-            
-        //     if (id.$oid === productId) {
-        //         // get relative product - same product category
-        //         dispatch(filterActions.getKeyFilter(tmp.category))
-
-        //         setPrice(formatPrice(tmp.price))
-        //         setProduct({...tmp})
-        //         setLongDes(getArraySpecify(tmp.long_desc))
-        //         break
-        //     }
-        // }
+        ;( async () => {
+            try {     
+                // Get Details Product
+                const res = await axios.get(`http://localhost:5000/api/v1/product/${productId}`)
+                const data = res.data
+                const tmp = {                   
+                    _id: data._id,
+                    name: data.name,
+                    price: data.price,
+                    category: data.category.name,
+                    short_desc: data.short_desc,
+                    long_desc: data.long_desc,
+                    img1: data.img1,
+                    img2: data.img2,
+                    img3: data.img3,
+                    img4: data.img4
+                }
+                // Gets relative products
+                const resRelative = await axios.get(`http://localhost:5000/api/v1/relative/product/${data.category._id}`)
+                const relativeProducts = resRelative.data.filter( (item: { _id: string | undefined; }) => item._id !== productId)
+                setListProduct(relativeProducts)
+                setProduct(tmp)
+                setLongDes(getArraySpecify(tmp.long_desc))
+            } catch (error) {
+                console.log(error)
+            }})()
     }, [])
-    
 
-    return (
-
+    return(
         <main className='max-w-5xl mx-auto'>
             {/* Specification product */}
             <div className='grid grid-cols-2 gap-x-3 gap-y-12 mb-14'>
-
                 {/* Images */}
                 <div className='grid grid-cols-[calc(20%_-_1rem)_1fr] grid-rows-1 gap-x-2'>
                     {/* cols list */}
@@ -137,18 +94,13 @@ export default function DetailPage() {
                         </li>
                     </ul>
                     {/* Main image */}
-                    <img className='object-contain h-full' src={product.img4} alt="Main" />
+                    <img className='object-contain h-full' src={product.img1} alt="Main" />
                 </div>
-
                 {/* Description */}
                 <div className='italic'>
-
                     <h3 className='font-semibold text-3xl mb-6'>{product.name}</h3>
-
-                    <p className='text-gray-500 mb-6'>{price} VND</p>
-
+                    <p className='text-gray-500 mb-6'>{(product.price) ? formatPrice(product.price) : null} VND</p>
                     <p className='text-gray-500 mb-6 text-sm'>{product.short_desc}</p>
-
                     <p className='uppercase font-medium mb-5'>category:
                         <span className='text-gray-500 lowercase'> {product.category}</span>
                     </p>
@@ -163,15 +115,12 @@ export default function DetailPage() {
                                         if (quantity > 1) {
                                             setQuantity(quantity - 1)
                                         }
-                                        console.log("Left");
                                     }}
                                     />
                                 <span className='not-italic'>{quantity}</span>
                                 <ArrowRightIcon 
                                     className='cursor-pointer'
                                     onClick={()=>{
-                                        
-                                        console.log("Right");
                                         setQuantity(quantity + 1)
                                     }}
                                     />
@@ -185,7 +134,6 @@ export default function DetailPage() {
                 </div>
                 {/* More description */}
                 <div className='col-span-2'>
-
                     <div className='bg-[#353535] text-[#E4E4E4] inline-block px-6 py-3 mb-6'>
                         <span className='uppercase italic'>description</span>
                     </div>
@@ -201,20 +149,17 @@ export default function DetailPage() {
                     </ul>
                 </div>
             </div>
-
             {/* Related product - same category */}
             <section className='lg:mb-12'>
                 <h3 className='italic uppercase font-medium tracking-wider mb-4'>related products</h3>
                 <div className='grid lg:grid-cols-4 gap-x-3 gap-y-4'>
                 {
-                    listProduct.map((value, index)=>(
-                        (JSON.stringify(value._id) !== JSON.stringify(product._id)) ? 
-                        <Card _id={value._id} name={value.name} avt={value.img1} price={value.price} key={index} handleClick={()=>{}} /> : null
+                    listProduct.map((value:any, index)=>(
+                        <Card _id={value._id} name={value.name} avt={value.img} price={value.price} key={index} handleClick={()=>{}} />
                     ))
                 }
                 </div>
             </section>
-            
         </main>
     );
 };

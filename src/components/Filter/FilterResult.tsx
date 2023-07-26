@@ -1,14 +1,10 @@
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import { Pagination, PaginationItem, Stack } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEffect, useState } from "react"
-import { useAppSelector } from "../../app/hooks"
-import { Pagination, PaginationItem, Stack  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { RootState } from "../../app/store"
-import { Product } from "../../model/product"
-import Card from "../Card/Card"
+import Card from "../Card/Card";
 
 const theme = createTheme({
     palette: {
@@ -41,23 +37,32 @@ declare module '@mui/material/PaginationItem' {
         neutral: true;
     }
 }
-export default function FilterResult() {
 
-    const [trending, setTrending] = useState<Product[]>([] as Product[])
+type Props = {
+    products: any[]
+}
+// Show result of filter by category
+export default function FilterResult( props: Props ) {
+
+    const { products } = props
+    // const [trending, setTrending] = useState<Product[]>([] as Product[])
 
     const navigate = useNavigate()
 
-    const selector = useAppSelector((state:RootState)=>state)
+    // const selector = useAppSelector((state:RootState)=>state)
 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        if (selector.filter.length !== 0) {
-            setTrending(selector.filter)
-        }
-    }, [selector.filter])
+    //     if (products.length !== 0) {
+
+    //     }
+    //     if (selector.filter.length !== 0) {
+    //         setTrending(selector.filter)
+    //     }
+    // }, [selector.filter])
 
     const forwardDetailsPage = function(id:string | null) {
-        console.log("Forward detail", id);  
+        // console.log("Forward detail", id)
         navigate("/detail/"+id) 
     }
 
@@ -65,9 +70,9 @@ export default function FilterResult() {
         <div>
             <div className='grid grid-cols-3 gap-x-3 mb-6'>
             {
-                trending.map((item, key)=>(
+                products.map((item:any, key)=>(
                     <Card key={key} handleClick={forwardDetailsPage} _id={item._id} name={item.name}
-                    avt={item.img1} price={item.price} />
+                    avt={item.img} price={item.price} />
                 ))
             }
             </div>
