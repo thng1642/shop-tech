@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 
 
-import { Product } from '../../model/product';
-import { trendingApi } from '../../features/product/TredingApi';
-import Card from '../../components/Card/Card';
-import SubscribeBar from '../../features/subscribe/SubscribeBar';
-import { BannerHeader } from '../../components/BannerHeader/BannerHeader'
-import DialogProduct from '../../components/PopUp/product/DialogProduct';
-import { useAppDispatch } from '../../app/hooks';
-import { popupActions } from '../../redux/PopUp/PopupSlice';
-import { useNavigate } from 'react-router-dom';
-import Chat from '../../components/ChatApp';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../app/hooks';
+import { BannerHeader } from '../../components/BannerHeader/BannerHeader';
+import Card from '../../components/Card/Card';
+import Chat from '../../components/ChatApp';
+import DialogProduct from '../../components/PopUp/product/DialogProduct';
+import SubscribeBar from '../../features/subscribe/SubscribeBar';
+import { Product } from '../../model/product';
+import { popupActions } from '../../redux/PopUp/PopupSlice';
 
 export default function HomePage() {
 

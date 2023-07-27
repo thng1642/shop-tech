@@ -4,39 +4,29 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AuthDto, LoginDto } from "../../model/auth";
 
 const initialState:AuthDto = {
-    email: '',
-    name: '',
-    phone: '',
+    access_token: '',
+    userInfo: {
+        email: '',
+        firstName: '',
+        lastName: ''
+    }
 }
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        authAccount(state, action:PayloadAction<LoginDto>){
-
-            // let tmp = {...state}
-            // tmp.email = action.payload.email
-            
-            // return tmp
-        },
+        authAccount(state, action:PayloadAction<LoginDto>){},
         logoutAccount() {},
         authAccountSuccess(state, action:PayloadAction<AuthDto>) {
-            
-            let tmp = {...state}
-            tmp = action.payload
-            localStorage.setItem('currentUser', JSON.stringify(tmp))
-            return tmp
+
+            sessionStorage.setItem('access_token',
+                action.payload.access_token)
+            sessionStorage.setItem('userInfo', 
+                JSON.stringify(action.payload.userInfo))
+            return action.payload
         },
-        authAccountFail(state) {
-
-            let tmp = {...state}
-
-            tmp.email = 'false'
-
-            localStorage.setItem('isAuth', 'false')
-            return tmp
-        }
+        authAccountFail(state) {}
     }
 })
 

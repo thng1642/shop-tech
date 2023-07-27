@@ -24,7 +24,7 @@ export default function DetailPage() {
     const [listProduct, setListProduct] = useState([])
 
     const getArraySpecify = function(text:string) {
-        const resultArray = text.split('•') 
+        const resultArray = text.split(/•|-/) 
         return resultArray
     }
 
@@ -70,7 +70,7 @@ export default function DetailPage() {
             } catch (error) {
                 console.log(error)
             }})()
-    }, [])
+    }, [productId])
 
     return(
         <main className='max-w-5xl mx-auto'>
@@ -155,7 +155,9 @@ export default function DetailPage() {
                 <div className='grid lg:grid-cols-4 gap-x-3 gap-y-4'>
                 {
                     listProduct.map((value:any, index)=>(
-                        <Card _id={value._id} name={value.name} avt={value.img} price={value.price} key={index} handleClick={()=>{}} />
+                        <Card _id={value._id} name={value.name} avt={value.img} price={value.price} key={index} handleClick={()=>{
+                            navigator(`/detail/${value._id}`)
+                        }} />
                     ))
                 }
                 </div>

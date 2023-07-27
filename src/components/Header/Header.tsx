@@ -1,39 +1,33 @@
+import * as React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-// @flow
-import * as React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { RootState } from '../../app/store';
-import { AuthDto } from '../../model/auth';
-import { authActions } from '../../redux/Auth/AuthSlice';
+import { AuthDto } from '../../model/auth'
 
 export function Header() {
 
-    const auth = useAppSelector((state:RootState)=>state.auth)
-
-    const dispatch = useAppDispatch()
-
     const nav = useNavigate()
-    
     const [currentUser, setCurrentUser] = React.useState<AuthDto>({
-        name: '',
-        email: '',
-        phone: ''
-    })
-
-    React.useEffect(()=>{
-        
-        const textCurrent = localStorage.getItem("currentUser")
-        
-        
-        if (textCurrent !== null) {
-
-            setCurrentUser(JSON.parse(textCurrent))
+        access_token: '',
+        userInfo: {
+            email: '',
+            firstName: '',
+            lastName: ''
         }
+    })
+    React.useEffect(() => {
+        const isAuth = Boolean(sessionStorage.getItem('userInfo')) &&
+            Boolean(sessionStorage.getItem('access_token'))
+        if (isAuth) {
+            const access_token = sessionStorage.getItem('access_token')
+            const userStr = sessionStorage.getItem('userInfo') ?? ''
+            const userInfo = JSON.parse(userStr)
 
-        console.log("current", currentUser);
-
-    },[currentUser.email])
+            setCurrentUser({
+                access_token: access_token ?? "", 
+                userInfo: userInfo
+            })
+        }
+    }, [])
 
     return (
         <header className='max-w-5xl mx-auto h-[40px] italic flex justify-between items-center mb-4'>
@@ -63,30 +57,34 @@ export function Header() {
                     </svg>
                     {/* Checking login ? */}
                     {
-                        (currentUser.email === '') ? <Link to='dangnhap'>Login</Link> :
+                        (currentUser.userInfo.email === '') ? <Link to='dangnhap'>Login</Link> :
                         <div className='flex flex-row items-center'>
                             {/* {getNameMail(currentUser.email)} */}
-                            {currentUser.name}
+                            {currentUser.userInfo.lastName}
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"     className="w-5 h-5">
                                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                             </svg>
 
                             <div className='hover:cursor-pointer' onClick={()=>{
-                                console.log("log out");
-                                setCurrentUser({
-                                    name: '',
-                                    email: '',
-                                    phone: ''
+                                // console.log("log out");
+                                setCurrentUser(
+                                {
+                                    access_token: '',
+                                    userInfo: {
+                                        email: '',
+                                        firstName: '',
+                                        lastName: ''
+                                    }
                                 })
-                                dispatch(authActions.logoutAccount())
-                                
+                                // dispatch(authActions.logoutAccount())
+                                sessionStorage.removeItem('access_token')
+                                sessionStorage.removeItem('userInfo')
+                                nav('/', { replace: true })
                             }}>
                                 <p>( Logout )</p>
                             </div>
                         </div>
                     }
-                    
-
                 </div>
 
             </div>

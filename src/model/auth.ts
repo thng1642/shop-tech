@@ -11,7 +11,10 @@ export interface LoginDto {
 }
 
 export interface AuthDto {
-    email: string,
-    name: string,
-    phone: string,
+    access_token: string,
+    userInfo: {
+        email: string,
+        firstName: string,
+        lastName: string
+    }
 }
