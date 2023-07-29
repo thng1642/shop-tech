@@ -18,10 +18,8 @@ export function TableCart() {
 
         let listCart = localStorage.getItem('listCart')
         if (listCart !== null) {
-
             setItems(JSON.parse(listCart))
             if (cart.length === 0) {
-
                 dispatch(cartActions.getItemsCart())
             }
         } 

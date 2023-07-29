@@ -8,6 +8,8 @@ import { Login } from '../pages/Login/Login';
 import { SignupPage } from '../pages/SignUp/SignupPage';
 import { Cart } from '../pages/Cart/Cart';
 import { Checkout } from '../pages/Checkout/Checkout';
+import Order from '../pages/Order/Order';
+import OrderDetail from '../pages/Order/OrderDetail';
 
 
 export default function AppRouter() {
@@ -20,6 +22,8 @@ export default function AppRouter() {
                     <Route path='detail/:productId'  element={<DetailPage />}/>
                     <Route path='cart' element={<Cart />} />
                     <Route path='/checkout' element={<Checkout />} />
+                    <Route path='/history' element={<Order />} />
+                    <Route path='/order/:orderId' element={<OrderDetail />} />
                 </Route>
                 <Route path='/dangnhap' element={<Login />}/>
                 <Route path='/dangky' element={<SignupPage />}/>

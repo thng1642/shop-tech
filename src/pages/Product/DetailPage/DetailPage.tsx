@@ -29,18 +29,24 @@ export default function DetailPage() {
     }
 
     const handleClickAddToCart = function() {
-
-        let item:Item = {
-            id: product._id,
-            name: product.name,
-            price: product.price,
-            img: product.img1,
-            quantity: quantity,
-            total: JSON.stringify((Number(product.price) * quantity))
+        // Checking was logged in before ?
+        const isLogged = Boolean(sessionStorage.getItem('access_token'))
+            && Boolean(sessionStorage.getItem('userInfo'))
+        if (isLogged) {
+            let item:Item = {
+                id: product._id,
+                name: product.name,
+                price: product.price,
+                img: product.img1,
+                quantity: quantity,
+                total: JSON.stringify((Number(product.price) * quantity))
+            }
+            // console.log("Cart: ", item);
+            dispatch(cartActions.addItemIntoCart(item))
+            navigator('/shop')
+        } else {
+            navigator('/dangnhap')
         }
-        // console.log("Cart: ", item);
-        dispatch(cartActions.addItemIntoCart(item))
-        navigator('/shop')
     }
 
     useEffect(()=>{

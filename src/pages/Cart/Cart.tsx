@@ -1,22 +1,33 @@
 import { TextField } from "@mui/material";
-import { Link } from "react-router-dom";
-
-import { TableCart } from "../../components/TableCart/TableCart";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
+import { TableCart } from "../../components/TableCart/TableCart";
 import { RootState } from "../../app/store";
 import { formatPrice } from "../../components/Card/script";
 
+/**
+ * Page show items, which user want order
+ */
 export function Cart() {
 
     const cart = useSelector((state:RootState) => state.cart)
-
     const [ total, setTotal ] = useState<string>('0')
+    const nav = useNavigate()
+    
+    useEffect(() => {
+        // Checking was logged in before ?
+        const isLogged = Boolean(sessionStorage.getItem('access_token'))
+            && Boolean(sessionStorage.getItem('userInfo'))
+        if ( !isLogged ) {
+            nav('/dangnhap')
+        }
+    })
 
     useEffect(()=>{
 
         if (cart.length !== 0) {
-            
             let totalPrice = 0
             // console.log("Cart reload with cart: ", cart);
             cart.forEach(( value ) => {
@@ -33,36 +44,27 @@ export function Cart() {
         <main className="max-w-5xl mx-auto min-h-[80vh]">
             {/* Heading */}
             <div className='flex flex-row justify-between px-8 py-12 italic w-full mb-12 bg-[#c1c7c14d]'>
-
                 <div className=''>
                     <p className='uppercase tracking-wider text-xl font-medium'>Cart</p>
                 </div>
-
                 <div>
                     <span className='uppercase text-gray-500'>cart</span>
                 </div>
             </div>
-
             <h3 className="uppercase font-normal italic mb-6 tracking-wide text-2xl">shopping cart</h3>
-
             <section className="w-full grid grid-cols-[1fr_300px] gap-x-6">
-
                 <TableCart />
                 {/* Bill */}
                 <div className="bg-[#ECEEEC] h-[fit-content] w-full px-8 py-10">
-
                     <h3 className="italic uppercase tracking-wider font-normal text-lg mb-3">cart total</h3>
-
                     <div className="flex flex-row justify-between border-b pb-3 mb-3 border-gray-500">
                         <h4 className="text-sm uppercase italic">subtotal</h4>
                         <span className="text-sm text-gray-500">{formatPrice(total)} VND</span>
                     </div>
-
                     <div className="flex flex-row justify-between mb-6">
                         <h4 className="uppercase italic">total</h4>
                         <span className="italic text-gray-600">{formatPrice(total)} VND</span>
                     </div>
-
                     <TextField 
                         className="bg-white h-12"
                         fullWidth
@@ -84,11 +86,8 @@ export function Cart() {
                         </svg>
                         <span>Continue shopping</span>
                     </Link>
-
                     <Link to='/checkout' className="italic items-center px-3 h-10 flex flex-row gap-2 border border-gray-500 hover:cursor-pointer">
-
                         <span>Proceed to checkout</span>
-
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                             <path fillRule="evenodd" d="M16.72 7.72a.75.75 0 011.06 0l3.75 3.75a.75.75 0 010 1.06l-3.75 3.75a.75.75 0 11-1.06-1.06l2.47-2.47H3a.75.75 0 010-1.5h16.19l-2.47-2.47a.75.75 0 010-1.06z" clipRule="evenodd" />
                         </svg>

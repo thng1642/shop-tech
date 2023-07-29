@@ -1,9 +1,10 @@
 
 export interface SignUpDto {
-    name: string,
+    firstName: string,
+    lastName: string,
     email: string,
     password: string,
-    phone: string,
+    phoneNumber: string,
 }
 export interface LoginDto {
     email: string,

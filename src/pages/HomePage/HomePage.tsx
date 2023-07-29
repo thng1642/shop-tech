@@ -57,10 +57,8 @@ export default function HomePage() {
     }
 
     return (
-        <main className='max-w-5xl mx-auto'>
-            
+        <main className='max-w-5xl mx-auto'>     
             <BannerHeader />
-
             {/* Category Products*/}
             <section className='w-full relative flex flex-col items-center mb-12'>
                 {/* Heading */}
@@ -70,7 +68,6 @@ export default function HomePage() {
                 </div>
                 {/* Images */}
                 <div className='w-full'>
-
                     <div className='grid grid-cols-[repeat(2,_1fr)] gap-6 mb-6'>
                         <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_1.png?alt=media&token=09afc365-0ad1-444f-8e10-d5c8b0385d2a" onClick={handleClickCategories} alt="iPhone" />
                         <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_2.png?alt=media&token=77850e57-cc22-4872-80cd-38f7e96201cb" onClick={handleClickCategories} alt="iMac" />
@@ -80,14 +77,11 @@ export default function HomePage() {
                         <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_4.png?alt=media&token=1aa445ea-5950-4357-913d-c25750012042" onClick={handleClickCategories} alt="watch" />
                         <img className='rounded-lg object-contain hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' src="https://firebasestorage.googleapis.com/v0/b/dotted-hulling-326801.appspot.com/o/shop%20tech%2Fproduct_5.png?alt=media&token=c4794d90-2525-499c-953a-a354b9b2986a" onClick={handleClickCategories} alt="AirPods" />
                     </div>
-                    
                 </div>
                 
             </section>
-
             {/* Trending products */}
             <section className='mb-12'>
-
                 {/* Heading */}
                 <div className='italic uppercase flex flex-col mb-6 items-start'>
                     <p className='text-xs tracking-wide text-gray-500'>made the hard way</p>
@@ -104,7 +98,6 @@ export default function HomePage() {
                 ))
                 }
                 </div>
-                
             </section>
             <DialogProduct />
             {/* Adding information */}
@@ -125,18 +118,12 @@ export default function HomePage() {
             
             {/* Subscribe bar */}
             <section className='grid grid-cols-2 w-full mb-12'>
-
                 <div className='italic flex flex-col mb-6 items-start'>
-
                     <p className='uppercase tracking-wider text-xl font-medium'>let's be friends!</p>
-
                     <h3 className='tracking-wider text-gray-500'>Nisi nisi tempor consequat laboris bisi.</h3>
-
                 </div>
-
                 <SubscribeBar />
             </section>
-
             {/* <Chat /> */}
             <div className='min-w-[64px] fixed bottom-10 right-4 '>
                 {
