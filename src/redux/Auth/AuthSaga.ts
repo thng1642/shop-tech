@@ -4,11 +4,12 @@ import { authActions } from "./AuthSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { AuthDto, LoginDto } from "../../model/auth";
 import axios from "axios";
+import { URL } from "../../app/constant";
 
 const loginAPI = async (loginDto: LoginDto) => {
     try {
         const res = await axios
-        .post("http://localhost:5000/api/v1/login", loginDto)
+        .post(URL+"/api/v1/login", loginDto)
         return [ res.data, null ]
     } catch(err) {
         console.log("Error when call api login")

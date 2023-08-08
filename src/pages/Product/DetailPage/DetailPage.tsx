@@ -10,6 +10,7 @@ import { formatPrice } from '../../../components/Card/script';
 import { Item } from '../../../model/cart';
 import { Product } from '../../../model/product';
 import { cartActions } from '../../../redux/Cart/CartSlice';
+import { URL } from '../../../app/constant';
 
 
 export default function DetailPage() {
@@ -53,7 +54,7 @@ export default function DetailPage() {
         ;( async () => {
             try {     
                 // Get Details Product
-                const res = await axios.get(`http://localhost:5000/api/v1/product/${productId}`)
+                const res = await axios.get(`${URL}/api/v1/product/${productId}`)
                 const data = res.data
                 const tmp = {                   
                     _id: data._id,
@@ -68,7 +69,7 @@ export default function DetailPage() {
                     img4: data.img4
                 }
                 // Gets relative products
-                const resRelative = await axios.get(`http://localhost:5000/api/v1/relative/product/${data.category._id}`)
+                const resRelative = await axios.get(`${URL}/api/v1/relative/product/${data.category._id}`)
                 const relativeProducts = resRelative.data.filter( (item: { _id: string | undefined; }) => item._id !== productId)
                 setListProduct(relativeProducts)
                 setProduct(tmp)

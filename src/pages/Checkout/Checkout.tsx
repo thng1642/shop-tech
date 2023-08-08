@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom"
 
 import { formatPrice } from "../../components/Card/script";
 import { Item } from "../../model/cart";
+import axios from "axios";
+import { URL } from "../../app/constant";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -29,8 +31,7 @@ export function Checkout() {
     const handelPlaceOrder = () => {
         if (!open) {
             // set up request to order
-            const request = {
-                access_token: accessToken,
+            const data = {
                 userInfo: {
                     name: nameRef.current
                         ?.getElementsByTagName('input')[0].value,
@@ -44,7 +45,25 @@ export function Checkout() {
                 items: items,
                 totalPrice: total,
             }
-            console.log(request)
+            ;( async () => {
+                try {
+                    const res = await axios.post(URL+'/api/v1/place-order', 
+                        data, 
+                        {
+                            headers: {
+                                'Authorization': 'Bearer ' + accessToken, 
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                    if (res) {
+                        nav('/history')
+                    }
+                } catch(error:any) {
+                    console.log("Error when call api place to order:", error)
+                }
+                
+            })()
+            console.log(data)
         }
     }
     // Open state Alter error when happen

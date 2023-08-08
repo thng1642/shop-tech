@@ -7,6 +7,7 @@ import { Item } from "../../model/cart";
 import { cartActions } from "../../redux/Cart/CartSlice";
 import OrderRecord from "./OrderRecord";
 import axios from "axios";
+import { URL } from "../../app/constant";
 
 function OrderTable() {
     const [ orders, setOrders ] = useState<any[]>([])
@@ -22,7 +23,7 @@ function OrderTable() {
         ;( async () => {
             try {
                 
-                const res = await axios.post('http://localhost:5000/api/v1/order', {
+                const res = await axios.post(URL+'/api/v1/order', {
                     userInfo: userInfo
                 },
                 {

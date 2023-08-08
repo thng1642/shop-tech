@@ -11,6 +11,7 @@ import DialogProduct from '../../components/PopUp/product/DialogProduct';
 import SubscribeBar from '../../features/subscribe/SubscribeBar';
 import { Product } from '../../model/product';
 import { popupActions } from '../../redux/PopUp/PopupSlice';
+import { URL } from '../../app/constant';
 
 export default function HomePage() {
 
@@ -41,7 +42,7 @@ export default function HomePage() {
         // Gets trending products
         ;(async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/v1/trending')
+                const res = await axios.get(URL+'/api/v1/trending')
                 const trendingProds = res.data
                 setTrending(res.data)
                 console.log(trendingProds)

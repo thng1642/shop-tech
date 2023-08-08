@@ -6,6 +6,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import axios from "axios";
 
 import { SignUpDto } from "../../model/auth";
+import { URL } from "../../app/constant";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -187,7 +188,7 @@ export function SignupPage() {
                                 // call api sign up
                                 ;( async () => {
                                     try {
-                                        await axios.post(`http://localhost:5000/api/v1/signup`, account)
+                                        await axios.post(`${URL}/api/v1/signup`, account)
                                         nav('/dangnhap', {
                                             replace: true
                                         })

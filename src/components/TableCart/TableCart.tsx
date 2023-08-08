@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { filterActions } from "../../redux/Filter/FilterSlice";
 import { RootState } from "../../app/store";
-import { CartRecord } from "../Cart/CartRecord";
 import { Item } from "../../model/cart";
 import { cartActions } from "../../redux/Cart/CartSlice";
+import { CartRecord } from "../Cart/CartRecord";
 
 export function TableCart() {
 

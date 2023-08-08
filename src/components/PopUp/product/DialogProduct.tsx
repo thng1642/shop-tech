@@ -13,6 +13,7 @@ import { RootState } from '../../../app/store';
 import { Product } from '../../../model/product';
 import { popupActions } from '../../../redux/PopUp/PopupSlice';
 import { formatPrice } from '../../Card/script';
+import { URL } from '../../../app/constant';
 /**
  * Dialog for product (showup)
  */
@@ -28,7 +29,7 @@ export default function DialogProduct() {
         setOpen(popup.state)
         // Get details product with pop-up window
         ;(async () => {
-            const res = await axios.get(`http://localhost:5000/api/v1/product/${popup.id}`)
+            const res = await axios.get(`${URL}/api/v1/product/${popup.id}`)
             const data = res.data
             const tmp = {
                 _id: data._id,

@@ -1,11 +1,12 @@
-import { TextField } from "@mui/material"
-import axios from "axios"
-import { forwardRef, useEffect, useRef, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { TextField } from "@mui/material";
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import axios from "axios";
+import { forwardRef, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { LoginDto } from "../../model/auth"
+import { URL } from "../../app/constant";
+import { LoginDto } from "../../model/auth";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -31,7 +32,7 @@ export function Login() {
     const loginAPI = async (loginDto: LoginDto) => {
         try {
             const res = await axios
-                .post("http://localhost:5000/api/v1/login", loginDto)
+                .post(URL+"/api/v1/login", loginDto)
             return [ res.data, null ]
         } catch(err) {
             console.log("Error when call api login")

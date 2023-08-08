@@ -1,0 +1,1 @@
+export const URL = 'https://shop-ten-theta.vercel.app'

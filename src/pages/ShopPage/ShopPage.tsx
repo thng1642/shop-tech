@@ -10,6 +10,7 @@ import FilterResult from '../../components/Filter/FilterResult';
 import { filterActions } from '../../redux/Filter/FilterSlice';
 import filter from './filter.json';
 import axios from 'axios';
+import { URL } from '../../app/constant';
 
 // Show up filter products page
 export default function ShopPage() {
@@ -58,7 +59,7 @@ export default function ShopPage() {
         if ( categoryId ) {
             // Call api get relative products <=> filter for category
             ;(async () => {
-                const res = await axios.get(`http://localhost:5000/api/v1/relative/product/${categoryId}`)
+                const res = await axios.get(`${URL}/api/v1/relative/product/${categoryId}`)
                 setProducts(res.data)
             })()
         }

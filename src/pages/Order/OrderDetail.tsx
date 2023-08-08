@@ -2,11 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { formatPrice } from "../../components/Card/script"
-
-type OrderDto = {
-    items: [],
-
-}
+import { URL } from "../../app/constant"
 
 function OrderDetail() {
 
@@ -29,7 +25,7 @@ function OrderDetail() {
             ;( async () => {
                 try {
                     
-                    const res = await axios.post('http://localhost:5000/api/v1/detail/order', {
+                    const res = await axios.post(URL+'/api/v1/detail/order', {
                         orderId: orderId,
                         userInfo: userInfo
                     },
@@ -76,7 +72,7 @@ function OrderDetail() {
                         <div className="grid grid-cols-[repeat(4,_1fr)_100px] text-center items-center mb-2" key={index}>
                             <span>{value._id}</span>
                             <span>
-                                <img className="w-full h-auto object-contain" src="https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FCCDN%2FReactJS%2FAssignment_Images%2FASM03_Resources%2Fiphone_13_4.jpeg?alt=media&token=dc72dde3-cfa4-4710-9493-ac2aa0ecf249" alt="Anh san pham" />
+                                <img className="w-full h-auto object-contain" src={value.image} alt="Anh san pham" />
                             </span>
                             <span>{value.name}</span>
                             <span>{formatPrice(value.price)}<br/>VND</span>
