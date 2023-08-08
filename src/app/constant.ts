@@ -1,1 +1,1 @@
-export const URL = 'https://shop-ten-theta.vercel.app'
+export const URL = 'https://server-shop.vercel.app'
