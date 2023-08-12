@@ -60,10 +60,13 @@ export function Checkout() {
                     }
                 } catch(error:any) {
                     console.log("Error when call api place to order:", error)
+                    // Alter to customer about error
+                    setOpen(true)
+                    setMessError(error.response.data)
                 }
                 
             })()
-            console.log(data)
+            // console.log(data)
         }
     }
     // Open state Alter error when happen
