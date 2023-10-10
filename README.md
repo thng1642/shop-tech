@@ -1,46 +1,24 @@
-# Getting Started with Create React App
+# Overview - Assignment FUNiX
+UI for client website shop tech. Clients can actions, such as: view, buy, add to cart.
+# Technologies
+- React Typescript
+- Redux toolkit
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+[Deployment UI](https://shop-ten-theta.vercel.app/)
+# Running on local
+```
+npm install
+npm start
+```
+# Screen sniping UI
+## Home page router '/'
+![Home Page](https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FCCDN%2FReactJS%2FAssignment_Images%2FRJS101x_ASM03_22.png?alt=media&token=a71c2c59-2bba-477f-87b5-cac35f2e3294)
+## Shop page router '/shop'
+![Shop Page](https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FCCDN%2FReactJS%2FAssignment_Images%2FRJS101x_ASM03_22.png?alt=media&token=a71c2c59-2bba-477f-87b5-cac35f2e3294)
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Detail page router '/detail/:productId'
+![Detail Page](https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FCCDN%2FReactJS%2FAssignment_Images%2FRJS101x_ASM03_08.png?alt=media&token=58109da4-d9dc-43f6-b44e-41233a18ccf0)
+## Cart page router '/cart'
+![Cart page](https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FCCDN%2FReactJS%2FAssignment_Images%2FRJS101x_ASM03_20.png?alt=media&token=fff6ab66-66e7-4834-b20b-8facba20c2d6)
+## Checkout page router '/checkout'
+![Checkout page](https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FCCDN%2FReactJS%2FAssignment_Images%2FRJS101x_ASM03_21.png?alt=media&token=db5ab89f-7a67-4385-8121-963c50a37ad6)
