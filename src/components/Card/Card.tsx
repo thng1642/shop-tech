@@ -14,7 +14,7 @@ export default function Card(props: Props) {
     // let id:Id = JSON.parse(JSON.stringify(props._id))
 
     return (
-        <div id={props._id} className='animate-showup italic flex flex-col items-center hover:cursor-pointer hover:bg-[#85818107] hover:scale-105 hover:shadow-lg' 
+        <div id={props._id} className='animate-showup italic flex flex-col items-center hover:cursor-pointer hover:bg-[#85818107] hover:shadow-lg' 
             onClick={(event) => {
                 // console.log(event.currentTarget.getAttribute('id'))
                 props.handleClick(event.currentTarget.getAttribute('id'))

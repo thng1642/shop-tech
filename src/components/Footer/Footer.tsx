@@ -10,7 +10,7 @@ export default function Footer() {
 
             {
                 data.map((item, index) => (
-                    <div key={index}>
+                    <div key={index} className='flex flex-col items-center'>
                         <h3 className='uppercase mb-4'>{item.heading}</h3>
                         {
                         item.values.map((li, key) => (

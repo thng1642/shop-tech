@@ -2,7 +2,7 @@
 
 export default function SubscribeBar() {
     return (
-        <div className="w-full h-[50px] flex flex-row">
+        <div className="max-sm:text-xs w-full h-[50px] flex flex-row">
             <div className="w-[80%] h-full flex items-center border border-slate-500">
                 <input type="text" className="w-full pl-3 focus:outline-none" placeholder="Enter your email address" name="subscribe" id="sub-bar" />
             </div>
