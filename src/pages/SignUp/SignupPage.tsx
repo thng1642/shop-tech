@@ -98,12 +98,12 @@ export function SignupPage() {
                     {messError}
                 </Alert>
             </Snackbar>
-            <div className="w-[40vw] px-16 py-20 bg-white shadow-md rounded-xl flex flex-col">
+            <div className="w-full px-8 md:w-[60vw] lg:w-[40vw] lg:px-16 lg:py-20 bg-white shadow-md rounded-xl flex flex-col">
                 <h3 className="text-3xl text-center mb-16 font-mono italic text-gray-400">Đăng ký</h3>
-                <div className="mb-4 flex flex-col">
+                <div className="gap-2 mb-4 flex flex-col">
                     <TextField
                         error={isFirstName}
-                        placeholder="First Name"
+                        placeholder="Họ và tên đệm"
                         required
                         helperText={helperFirstName}
                         value={account.firstName}
@@ -117,7 +117,7 @@ export function SignupPage() {
                     />
                     <TextField
                         error={isLastName}
-                        placeholder="Last Name"
+                        placeholder="Tên"
                         required
                         helperText={helperLastName}
                         value={account.lastName}
@@ -147,7 +147,7 @@ export function SignupPage() {
                     <TextField 
                         // label='Password'
                         error={isPassword}
-                        placeholder="Password"
+                        placeholder="Mật khẩu"
                         required
                         type="password"
                         helperText={helperPassword}
@@ -163,7 +163,7 @@ export function SignupPage() {
                         }}
                     />
                     <TextField 
-                        placeholder="Phone"
+                        placeholder="Số điện thoại"
                         required
                         error={isPhone}
                         helperText={helperPhone}
@@ -208,11 +208,11 @@ export function SignupPage() {
                         }
                     }}
                 >
-                    <span className="uppercase">sign up</span>
+                    <span className="uppercase">đăng ký</span>
                 </div> 
                 
                 <div className="italic text-gray-500 inline-block text-center">
-                    <span>Login?</span>
+                    <span>Đăng nhập </span>
                     <Link to={'/dangnhap'}  className="text-blue-500">Click</Link>
                 </div>
             </div>
