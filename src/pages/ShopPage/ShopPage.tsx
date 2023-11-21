@@ -77,7 +77,7 @@ export default function ShopPage() {
                 </div>
             </div>
             {/* Main content */}
-            <section className='italic grid grid-cols-[20%_1fr] gap-x-6'>
+            <section className='italic grid lg:grid-cols-[20%_1fr] gap-x-6'>
                  {/* Filter Bar */}
                 <div>
                     <h3 className='uppercase tracking-wider font-semibold mb-4'>{filter.name}</h3>
@@ -94,7 +94,7 @@ export default function ShopPage() {
                                 {
                                 item.values.map((value, i) => (
                                     <li 
-                                        className='ml-6 hover:cursor-pointer hover:text-[#E7C35F] hover:scale-105 mb-3'     
+                                        className='ml-6 hover:cursor-pointer hover:text-[#E7C35F] mb-3'     
                                         key={i}
                                         onClick={ (event)=> {
                                             let key:string = event.currentTarget.innerText
@@ -109,7 +109,6 @@ export default function ShopPage() {
                                 }
                             </ul>
                         </div>
-
                     ))
                     }
                 </div>
@@ -140,7 +139,6 @@ export default function ShopPage() {
                     {/* Results Filter */}
                     <FilterResult products={products} />
                 </div>
-
             </section>
         </main>
     );

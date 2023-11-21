@@ -82,9 +82,9 @@ export default function DetailPage() {
     return(
         <main className='max-w-5xl mx-auto'>
             {/* Specification product */}
-            <div className='grid grid-cols-2 gap-x-3 gap-y-12 mb-14'>
+            <div className='flex flex-col lg:grid lg:grid-cols-2 lg:gap-x-3 lg:gap-y-12 mb-14'>
                 {/* Images */}
-                <div className='grid grid-cols-[calc(20%_-_1rem)_1fr] grid-rows-1 gap-x-2'>
+                <div className='order-2 grid grid-cols-[calc(20%_-_1rem)_1fr] grid-rows-1 gap-x-2'>
                     {/* cols list */}
                     <ul>
                         <li>
@@ -112,7 +112,7 @@ export default function DetailPage() {
                         <span className='text-gray-500 lowercase'> {product.category}</span>
                     </p>
                     {/* Add to cart action */}
-                    <div className='flex flex-row'>
+                    <div className='max-lg:mb-3 flex flex-row'>
                         <div className=' px-4  border border-slate-600 flex flex-row items-center w-[250px] h-10 justify-between'>
                             <span className='uppercase text-gray-500 italic'>Quantity</span> 
                             <div>
