@@ -138,7 +138,7 @@ export function Checkout() {
             {/* Heading */}
             <div className='flex flex-row justify-between px-8 py-12 italic w-full mb-12 bg-[#c1c7c14d]'>
                 <div className=''>
-                    <p className='uppercase tracking-wider text-xl font-medium'>checkout</p>
+                    <p className='uppercase tracking-wider md:text-xl md:font-medium'>checkout</p>
                 </div>
                 <div>
                     <span className="uppercase">home / cart / </span>
@@ -146,11 +146,11 @@ export function Checkout() {
                 </div>
             </div>
             {/* Main content */}
-            <div className="grid grid-cols-[1fr_350px] gap-x-6 italic">
+            <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr_350px] md:gap-x-6 italic">
                 {/* Form input info */}
                 <div className="mb-16">
                     <div className="mb-4">
-                        <label className="uppercase tracking-wider text-gray-500 font-medium mb-2 inline-block" htmlFor="full-name">full name:</label>
+                        <label className="uppercase tracking-wider text-gray-500 text-sm md:text-base md:font-medium mb-2 inline-block" htmlFor="full-name">full name:</label>
                         <TextField 
                             id="full-name"
                             fullWidth
@@ -166,7 +166,7 @@ export function Checkout() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="uppercase tracking-wider text-gray-500 font-medium mb-2 inline-block" htmlFor="email">email:</label>
+                        <label className="uppercase tracking-wider text-gray-500 text-sm md:text-base md:font-medium mb-2 inline-block" htmlFor="email">email:</label>
                         <TextField 
                             id="email"
                             fullWidth
@@ -182,7 +182,7 @@ export function Checkout() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="uppercase tracking-wider text-gray-500 font-medium mb-2 inline-block" htmlFor="phone-number">phone number:</label>
+                        <label className="uppercase tracking-wider text-gray-500 text-sm md:text-base md:font-medium mb-2 inline-block" htmlFor="phone-number">phone number:</label>
                         <TextField 
                             id="phone-number"
                             fullWidth
@@ -198,7 +198,7 @@ export function Checkout() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="uppercase tracking-wider text-gray-500 font-medium mb-2 inline-block" htmlFor="address">address:</label>
+                        <label className="uppercase tracking-wider text-gray-500 text-sm md:text-base md:font-medium mb-2 inline-block" htmlFor="address">address:</label>
                         <TextField 
                             id="address"
                             fullWidth
@@ -221,8 +221,8 @@ export function Checkout() {
                     </div>
                 </div>
                 {/* Confirm checkout */}
-                <div className="bg-[#ECEEEC] h-[fit-content] w-full px-8 py-10">
-                    <p className="italic uppercase tracking-wider font-medium text-lg mb-6">your order</p>
+                <div className="italic uppercase tracking-wider md:font-medium md:text-lg max-md:mb-4 bg-[#ECEEEC] h-[fit-content] w-full px-8 py-10">
+                    <p className="mb-6">your order</p>
                     {
                         items.map((value, index) => (
                         <div key={index} className="italic grid grid-cols-2 items-center justify-between border-b pb-2 border-gray-400 border-solid mb-4">
@@ -233,8 +233,8 @@ export function Checkout() {
                     }
                     {/* Total */}
                     <div className="flex flex-row justify-between">
-                        <p className="italic uppercase tracking-wider font-medium ">total</p>
-                        <span className="text-lg">{formatPrice(total)} VND</span>
+                        <p className="">total</p>
+                        <span className="md:text-lg">{formatPrice(total)} VND</span>
                     </div>
                 </div>
             </div>
